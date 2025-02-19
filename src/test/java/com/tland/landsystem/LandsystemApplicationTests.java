@@ -1,0 +1,13 @@
+package com.tland.landsystem;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class LandsystemApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
