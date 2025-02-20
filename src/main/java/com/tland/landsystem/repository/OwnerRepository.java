@@ -1,6 +1,6 @@
 package com.tland.landsystem.repository;
 
-import com.tland.landsystem.Entity.Owner;
+import com.tland.landsystem.entity.Owner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,9 @@
-package com.tland.landsystem.Entity;
+package com.tland.landsystem.entity;
 
+import com.tland.landsystem.Enum.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import com.tland.landsystem.Enum.UserRole;
 
 
 @Entity

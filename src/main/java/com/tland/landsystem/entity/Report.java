@@ -1,9 +1,11 @@
-package com.tland.landsystem.Entity;
+package com.tland.landsystem.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
-import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -11,14 +13,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JobType {
+public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer Id;
+    Integer id;
 
     @Column(nullable = false)
-    String name;
+    String reportName;
+
+    @Temporal(TemporalType.DATE)
+    Date creationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    Users createdBy;
 
     @Column(columnDefinition = "TEXT")
-    String description;
+    String content;
+
+    @Column(columnDefinition = "TEXT")
+    String analysisData;
 }

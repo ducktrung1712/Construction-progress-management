@@ -1,10 +1,13 @@
-package com.tland.landsystem.Entity;
+package com.tland.landsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tland.landsystem.Enum.LandStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
-import com.tland.landsystem.Enum.LandStatus;
 
 @Entity
 @Getter
@@ -13,18 +16,23 @@ import com.tland.landsystem.Enum.LandStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // ✅ Bỏ qua proxy Hibernate
+
 public class Land {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer Id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
+    @JsonIgnore
     Area area;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
+    @JsonIgnore
     Owner owner;
+
 
     @Column(nullable = false)
     float areaSize;
@@ -49,4 +57,5 @@ public class Land {
 
     @Column(columnDefinition = "TEXT")
     String description;
+
 }

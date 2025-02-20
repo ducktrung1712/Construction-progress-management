@@ -1,9 +1,9 @@
 package com.tland.landsystem.controller;
 
-import com.tland.landsystem.dto.ResourceNotFoundException;
-import com.tland.landsystem.Entity.Owner;
-import com.tland.landsystem.repository.OwnerRepository;
+import com.tland.landsystem.entity.Owner;
+import com.tland.landsystem.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,47 +13,31 @@ import java.util.List;
 public class OwnerController {
 
     @Autowired
-    private OwnerRepository ownerRepository;
+    private OwnerService ownerService;
 
-    // Lấy danh sách tất cả các owner
     @GetMapping
-    public List<Owner> getAllOwners() {
-        return ownerRepository.findAll();
+    public ResponseEntity<List<Owner>> getAllOwners() {
+        return ResponseEntity.ok(ownerService.getAllOwners());
     }
 
-    // Lấy thông tin một owner theo id
     @GetMapping("/{id}")
-    public Owner getOwnerById(@PathVariable Integer id) {
-        return ownerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy owner với id " + id));
+    public ResponseEntity<Owner> getOwnerById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ownerService.getOwnerById(id));
     }
 
-    // Tạo mới một owner
     @PostMapping
-    public Owner createOwner(@RequestBody Owner owner) {
-        return ownerRepository.save(owner);
+    public ResponseEntity<Owner> createOwner(@RequestBody Owner owner) {
+        return ResponseEntity.ok(ownerService.createOwner(owner));
     }
 
-    // Cập nhật thông tin của một owner
     @PutMapping("/{id}")
-    public Owner updateOwner(@PathVariable Integer id, @RequestBody Owner ownerDetails) {
-        Owner owner = ownerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy owner với id " + id));
-
-        owner.setFullName(ownerDetails.getFullName());
-        owner.setContact(ownerDetails.getContact());
-        owner.setAddress(ownerDetails.getAddress());
-        owner.setTransactionStatus(ownerDetails.getTransactionStatus());
-        owner.setChangeHistory(ownerDetails.getChangeHistory());
-
-        return ownerRepository.save(owner);
+    public ResponseEntity<Owner> updateOwner(@PathVariable Integer id, @RequestBody Owner ownerDetails) {
+        return ResponseEntity.ok(ownerService.updateOwner(id, ownerDetails));
     }
 
-    // Xóa một owner
     @DeleteMapping("/{id}")
-    public void deleteOwner(@PathVariable Integer id) {
-        Owner owner = ownerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy owner với id " + id));
-        ownerRepository.delete(owner);
+    public ResponseEntity<Void> deleteOwner(@PathVariable Integer id) {
+        ownerService.deleteOwner(id);
+        return ResponseEntity.noContent().build();
     }
 }

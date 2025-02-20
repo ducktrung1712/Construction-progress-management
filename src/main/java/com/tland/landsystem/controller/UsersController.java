@@ -1,6 +1,6 @@
 package com.tland.landsystem.controller;
 
-import com.tland.landsystem.Entity.Users;
+import com.tland.landsystem.entity.Users;
 import com.tland.landsystem.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum JobStatus {
     IN_PROGRESS("In progress"),
-    PAUSED("Paused"),
-    COMPLETED("Completed");
+    COMPLETE("Complete"),
+    PAUSED("Paused");
 
     private final String value;
 
@@ -20,12 +20,12 @@ public enum JobStatus {
     }
 
     @JsonCreator
-    public static JobStatus forValue(String value) {
+    public static JobStatus fromString(String value) {
         for (JobStatus status : JobStatus.values()) {
             if (status.value.equalsIgnoreCase(value)) {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Unknown JobStatus: " + value);
+        throw new IllegalArgumentException("Invalid JobStatus: " + value);
     }
 }

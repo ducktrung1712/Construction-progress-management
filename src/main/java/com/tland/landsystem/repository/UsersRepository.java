@@ -1,6 +1,6 @@
 package com.tland.landsystem.repository;
 
-import com.tland.landsystem.Entity.Users;
+import com.tland.landsystem.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

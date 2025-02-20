@@ -1,6 +1,6 @@
 package com.tland.landsystem.repository;
 
-import com.tland.landsystem.Entity.Land;
+import com.tland.landsystem.entity.Land;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

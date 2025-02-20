@@ -1,10 +1,9 @@
-package com.tland.landsystem.Entity;
+package com.tland.landsystem.entity;
 
+import com.tland.landsystem.Enum.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -13,26 +12,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Area {
+public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer Id;
 
     @Column(nullable = false)
-    String name;
+    String fullName;
 
-    @Column(nullable = false)
-    float totalArea;
+    String contact;
+    String address;
 
-    String priorityLandType;
-
-    @Lob
-    byte[] image;
+    @Enumerated(EnumType.STRING)
+    TransactionStatus transactionStatus;
 
     @Column(columnDefinition = "TEXT")
-    String description;
-
-    @OneToMany(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<Land> lands;
+    String changeHistory;
 }
-
