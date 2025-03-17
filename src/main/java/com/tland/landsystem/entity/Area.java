@@ -17,7 +17,7 @@ import java.util.List;
 public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer Id;
+    Integer id;
 
     @Column(nullable = false)
     String name;

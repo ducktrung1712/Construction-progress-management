@@ -34,7 +34,7 @@ public class Users {
     UserRole role;
 
     @ManyToOne
-    @JoinColumn(name = "work_group")
+    @JoinColumn(name = "work_group", referencedColumnName = "id")
     WorkGroup workGroup;
     public void clearPassword() {
         this.password = null;

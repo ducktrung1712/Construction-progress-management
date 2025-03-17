@@ -4,30 +4,27 @@ import com.tland.landsystem.entity.Job;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Arrays;
-
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class JobDTO {
     Integer id;
     Integer landId;
     Integer jobTypeId;
     Integer assignedTo;
     String description;
-    String jobTypeName; // Tránh lỗi proxy
-    String landLocation; // Tránh lỗi proxy
-    String image;
+    String jobTypeName;
+    String landLocation;
+    byte[] image; // Dữ liệu ảnh dưới dạng byte[]
     String status;
 
     public JobDTO(Job job) {
         this.id = job.getId();
         this.description = job.getDescription();
-        this.image = Arrays.toString(job.getImage());
+        this.image = job.getImage(); // Giữ nguyên kiểu byte[]
         this.status = String.valueOf(job.getStatus());
 
         this.landId = (job.getLand() != null) ? job.getLand().getId() : null;
@@ -38,3 +35,4 @@ public class JobDTO {
         this.landLocation = (job.getLand() != null) ? job.getLand().getLocation() : null;
     }
 }
+

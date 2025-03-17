@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer Id;
+    Integer id;
 
     @Column(nullable = false)
     String fullName;

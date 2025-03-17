@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum JobStatus {
     IN_PROGRESS("In progress"),
-    COMPLETE("Complete"),
+    COMPLETED("Completed"),
     PAUSED("Paused");
 
     private final String value;

@@ -47,31 +47,28 @@ public class JobService {
         Job job = new Job();
         job.setId(jobDTO.getId());
         job.setDescription(jobDTO.getDescription());
-        job.setStatus(JobStatus.fromString(jobDTO.getStatus())); // Chuyển String -> Enum
-        // Kiểm tra nếu image không null thì mới gọi getBytes()
-        if (jobDTO.getImage() != null) {
-            job.setImage(jobDTO.getImage().getBytes());
-        } else {
-            job.setImage(null); // Hoặc giữ nguyên giá trị cũ nếu cần
+        job.setStatus(JobStatus.fromString(jobDTO.getStatus()));
+
+        // Kiểm tra dữ liệu ảnh có hợp lệ không
+        if (jobDTO.getImage() != null && jobDTO.getImage().length > 0) {
+            job.setImage(jobDTO.getImage()); // Giữ nguyên kiểu byte[]
         }
 
-        // Gán đối tượng Land
         if (jobDTO.getLandId() != null) {
             job.setLand(landRepository.findById(jobDTO.getLandId()).orElse(null));
         }
 
-        // Gán đối tượng JobType
         if (jobDTO.getJobTypeId() != null) {
             job.setJobType(jobTypeRepository.findById(jobDTO.getJobTypeId()).orElse(null));
         }
 
-        // Gán đối tượng User
         if (jobDTO.getAssignedTo() != null) {
             job.setAssignedTo(userRepository.findById(jobDTO.getAssignedTo()).orElse(null));
         }
 
         return job;
     }
+
 
     // Tạo công việc mới
     public JobDTO createJob(JobDTO jobDTO) {
@@ -105,11 +102,9 @@ public class JobService {
 
         // Cập nhật các thuộc tính khác
         job.setDescription(jobDTO.getDescription());
-        // Kiểm tra nếu image không null thì mới gọi getBytes()
-        if (jobDTO.getImage() != null) {
-            job.setImage(jobDTO.getImage().getBytes());
-        } else {
-            job.setImage(null); // Hoặc giữ nguyên giá trị cũ nếu cần
+        // Kiểm tra dữ liệu ảnh có hợp lệ không
+        if (jobDTO.getImage() != null && jobDTO.getImage().length > 0) {
+            job.setImage(jobDTO.getImage()); // Giữ nguyên kiểu byte[]
         }
         job.setStatus(JobStatus.fromString(jobDTO.getStatus())); // Chuyển String -> Enum
 

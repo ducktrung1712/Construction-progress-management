@@ -21,18 +21,17 @@ import java.util.Date;
 public class Land {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer Id;
+    Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "area_id")
+    @JoinColumn(name = "area_id", referencedColumnName = "id")
     @JsonIgnore
     Area area;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @JsonIgnore
     Owner owner;
-
 
     @Column(nullable = false)
     float areaSize;

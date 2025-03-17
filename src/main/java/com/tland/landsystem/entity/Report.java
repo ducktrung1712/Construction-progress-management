@@ -25,7 +25,7 @@ public class Report {
     Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
     Users createdBy;
 
     @Column(columnDefinition = "TEXT")
@@ -33,4 +33,16 @@ public class Report {
 
     @Column(columnDefinition = "TEXT")
     String analysisData;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id", referencedColumnName = "id")
+    Job job;
+
+    @ManyToOne
+    @JoinColumn(name = "land_id", referencedColumnName = "id")
+    Land land;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    Owner owner;
 }

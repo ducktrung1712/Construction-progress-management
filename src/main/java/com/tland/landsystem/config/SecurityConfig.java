@@ -44,6 +44,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/jobs/**").permitAll()
                         .requestMatchers("/api/jobtypes/**").permitAll()
 
+                        // 🔥 Thêm WorkGroups vào đây để tránh lỗi 403
+                        .requestMatchers("/api/workgroups/**").permitAll()
+                        .requestMatchers("/workgroups/**").permitAll()
+                        // Cho phép truy cập report
+                        .requestMatchers("/api/reports/**").permitAll()
+                        .requestMatchers("/reports/**").permitAll()
+
+
                         // Các request khác cần xác thực
                         .anyRequest().authenticated()
                 );
