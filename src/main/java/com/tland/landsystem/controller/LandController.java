@@ -15,37 +15,29 @@ public class LandController {
     @Autowired
     private LandService landService;
 
-    // Lấy danh sách tất cả các đất
     @GetMapping
-    public List<Land> getAllLands() {
-        return landService.getAllLands();
+    public ResponseEntity<List<Land>> getAllLands() {
+        return ResponseEntity.ok(landService.getAllLands());
     }
 
-    // Lấy thông tin một đất theo id
     @GetMapping("/{id}")
-    public ResponseEntity<Land> getLandById(@PathVariable int id) {
-        return landService.getLandById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Land> getLandById(@PathVariable Integer id) {
+        return ResponseEntity.ok(landService.getLandById(id));
     }
 
-    // Tạo mới một đất
     @PostMapping
-    public Land createLand(@RequestBody Land land) {
-        return landService.createLand(land);
+    public ResponseEntity<Land> createLand(@RequestBody Land land) {
+        return ResponseEntity.ok(landService.createLand(land));
     }
 
-    // Cập nhật thông tin một đất theo id
     @PutMapping("/{id}")
-    public ResponseEntity<Land> updateLand(@PathVariable int id, @RequestBody Land landDetails) {
-        return landService.updateLand(id, landDetails)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Land> updateLand(@PathVariable Integer id, @RequestBody Land landDetails) {
+        return ResponseEntity.ok(landService.updateLand(id, landDetails));
     }
 
-    // Xóa một đất theo id
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLand(@PathVariable int id) {
-        return landService.deleteLand(id) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deleteLand(@PathVariable Integer id) {
+        landService.deleteLand(id);
+        return ResponseEntity.noContent().build();
     }
 }

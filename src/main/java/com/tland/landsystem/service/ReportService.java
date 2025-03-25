@@ -67,7 +67,6 @@ public class ReportService {
             report.setAnalysisData(updatedReport.getAnalysisData());
             report.setJob(updatedReport.getJob());
             report.setLand(updatedReport.getLand());
-            report.setOwner(updatedReport.getOwner());
             return reportRepository.save(report);
         });
     }

@@ -10,49 +10,36 @@ import java.util.Optional;
 
 @Service
 public class LandService {
-    private final LandRepository landRepository;
 
     @Autowired
-    public LandService(LandRepository landRepository) {
-        this.landRepository = landRepository;
-    }
+    private LandRepository landRepository;
 
-    // Lấy danh sách tất cả các đất
     public List<Land> getAllLands() {
         return landRepository.findAll();
     }
 
-    // Lấy thông tin một đất theo id
-    public Optional<Land> getLandById(int id) {
-        return landRepository.findById(id);
+    public Land getLandById(Integer id) {
+        return landRepository.findById(id).orElseThrow(() -> new RuntimeException("Land not found"));
     }
 
-    // Tạo mới một đất
     public Land createLand(Land land) {
         return landRepository.save(land);
     }
 
-    // Cập nhật thông tin một đất theo id
-    public Optional<Land> updateLand(int id, Land landDetails) {
-        return landRepository.findById(id).map(land -> {
-            land.setArea(landDetails.getArea());
-            land.setOwner(landDetails.getOwner());
-            land.setLocation(landDetails.getLocation());
-            land.setStatus(landDetails.getStatus());
-            land.setLandType(landDetails.getLandType());
-            land.setImage(landDetails.getImage());
-            land.setDescription(landDetails.getDescription());
-            return landRepository.save(land);
-        });
+    public Land updateLand(Integer id, Land landDetails) {
+        Land land = getLandById(id);
+        land.setArea(landDetails.getArea());
+        land.setOwner(landDetails.getOwner());
+        land.setAreaSize(landDetails.getAreaSize());
+        land.setLocation(landDetails.getLocation());
+        land.setStatus(landDetails.getStatus());
+        land.setLandType(landDetails.getLandType());
+        land.setImage(landDetails.getImage());
+        land.setDescription(landDetails.getDescription());
+        return landRepository.save(land);
     }
 
-    // Xóa một đất theo id
-    public boolean deleteLand(int id) {
-        if (landRepository.existsById(id)) {
-            landRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void deleteLand(Integer id) {
+        landRepository.deleteById(id);
     }
 }
-

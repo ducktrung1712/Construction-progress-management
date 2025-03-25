@@ -15,6 +15,7 @@ public class LoginRequest {
     }
 
     // Getter cho password
+
     public String getPassword() {
         return password;
     }

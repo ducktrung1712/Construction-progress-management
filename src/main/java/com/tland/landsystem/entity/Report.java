@@ -42,7 +42,4 @@ public class Report {
     @JoinColumn(name = "land_id", referencedColumnName = "id")
     Land land;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    Owner owner;
 }

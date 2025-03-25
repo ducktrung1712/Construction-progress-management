@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LandRepository extends JpaRepository<Land, Integer> {
-    // Bạn có thể định nghĩa thêm các phương thức truy vấn nếu cần
 }
