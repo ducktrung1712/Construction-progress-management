@@ -34,6 +34,9 @@ public class Report {
     @Column(columnDefinition = "TEXT")
     String analysisData;
 
+    @Lob
+    byte[] image;
+
     @ManyToOne
     @JoinColumn(name = "job_id", referencedColumnName = "id")
     Job job;

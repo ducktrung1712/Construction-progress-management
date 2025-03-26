@@ -46,16 +46,5 @@ public class JobController {
         boolean deleted = jobService.deleteJob(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
-    @GetMapping("/{id}/image")
-    public ResponseEntity<byte[]> getJobImage(@PathVariable Integer id) {
-        JobDTO job = jobService.getJobById(id);
-        if (job == null || job.getImage() == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok()
-                .header("Content-Type", "image/png") // Đổi thành "image/jpeg" nếu ảnh là JPG
-                .body(job.getImage());
-    }
 
 }

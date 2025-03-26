@@ -49,10 +49,6 @@ public class JobService {
         job.setDescription(jobDTO.getDescription());
         job.setStatus(JobStatus.fromString(jobDTO.getStatus()));
 
-        // Kiểm tra dữ liệu ảnh có hợp lệ không
-        if (jobDTO.getImage() != null && jobDTO.getImage().length > 0) {
-            job.setImage(jobDTO.getImage()); // Giữ nguyên kiểu byte[]
-        }
 
         if (jobDTO.getLandId() != null) {
             job.setLand(landRepository.findById(jobDTO.getLandId()).orElse(null));
@@ -102,10 +98,7 @@ public class JobService {
 
         // Cập nhật các thuộc tính khác
         job.setDescription(jobDTO.getDescription());
-        // Kiểm tra dữ liệu ảnh có hợp lệ không
-        if (jobDTO.getImage() != null && jobDTO.getImage().length > 0) {
-            job.setImage(jobDTO.getImage()); // Giữ nguyên kiểu byte[]
-        }
+
         job.setStatus(JobStatus.fromString(jobDTO.getStatus())); // Chuyển String -> Enum
 
         Job updatedJob = jobRepository.save(job);

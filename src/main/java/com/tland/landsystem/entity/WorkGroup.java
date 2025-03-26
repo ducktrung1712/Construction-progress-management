@@ -1,5 +1,7 @@
 package com.tland.landsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tland.landsystem.Enum.WorkGroupStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +19,7 @@ import java.util.Date;
 public class WorkGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer Id;
+    Integer id;
 
     @Column(nullable = false)
     String name;
@@ -33,6 +35,4 @@ public class WorkGroup {
     @Enumerated(EnumType.STRING)
     WorkGroupStatus status;
 
-    @Lob
-    byte[] image;
 }

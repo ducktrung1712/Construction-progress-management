@@ -42,11 +42,6 @@ public class WorkGroupService {
         existingWorkGroup.setDeadline(updatedWorkGroup.getDeadline());
         existingWorkGroup.setPriority(updatedWorkGroup.getPriority());
         existingWorkGroup.setStatus(updatedWorkGroup.getStatus());
-
-        if (updatedWorkGroup.getImage() != null) {
-            existingWorkGroup.setImage(updatedWorkGroup.getImage());
-        }
-
         return workGroupRepository.save(existingWorkGroup);
     }
 

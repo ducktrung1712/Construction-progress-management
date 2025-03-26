@@ -18,19 +18,15 @@ public class JobDTO {
     String description;
     String jobTypeName;
     String landLocation;
-    byte[] image; // Dữ liệu ảnh dưới dạng byte[]
     String status;
 
     public JobDTO(Job job) {
         this.id = job.getId();
         this.description = job.getDescription();
-        this.image = job.getImage(); // Giữ nguyên kiểu byte[]
         this.status = String.valueOf(job.getStatus());
-
         this.landId = (job.getLand() != null) ? job.getLand().getId() : null;
         this.jobTypeId = (job.getJobType() != null) ? job.getJobType().getId() : null;
         this.assignedTo = (job.getAssignedTo() != null) ? job.getAssignedTo().getId() : null;
-
         this.jobTypeName = (job.getJobType() != null) ? job.getJobType().getName() : null;
         this.landLocation = (job.getLand() != null) ? job.getLand().getLocation() : null;
     }

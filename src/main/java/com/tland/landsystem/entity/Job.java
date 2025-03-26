@@ -27,7 +27,7 @@ public class Job {
     @JsonIgnore  // ✅ Bỏ qua jobType khi serialize JSON
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_type_id")
-    private JobType jobType;
+    JobType jobType;
 
     @Enumerated(EnumType.STRING) // ✅ Lưu Enum dưới dạng chuỗi "Paused", "In progress", "Completed"
     JobStatus status;
@@ -40,6 +40,4 @@ public class Job {
     @Column(columnDefinition = "TEXT")
     String description;
 
-    @Lob
-    byte[] image;
 }
