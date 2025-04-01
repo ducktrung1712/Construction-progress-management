@@ -10,9 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Integer> {
-    List<Report> findByJob_JobType_Name(String name);
-    @Query("SELECT r FROM Report r WHERE r.job.jobType.id = :jobTypeId")
-    List<Report> findByJob_JobType_Id(@Param("jobTypeId") Integer jobTypeId);
 
+    // Find reports by creator user ID
+    List<Report> findByCreatedById(Integer userId);
 
+    // Alternative with JPQL query for more control (e.g., eager loading relationships)
+    @Query("SELECT r FROM Report r JOIN FETCH r.createdBy WHERE r.createdBy.id = :userId")
+    List<Report> findReportsByUserIdWithCreator(@Param("userId") Integer userId);
 }

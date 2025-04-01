@@ -31,4 +31,3 @@ public class JobDTO {
         this.landLocation = (job.getLand() != null) ? job.getLand().getLocation() : null;
     }
 }
-

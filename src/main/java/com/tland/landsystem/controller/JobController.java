@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
+@CrossOrigin(origins = "*")
 public class JobController {
     private final JobService jobService;
 
@@ -19,8 +20,8 @@ public class JobController {
     }
 
     @GetMapping
-    public List<JobDTO> getAllJobs() {
-        return jobService.getAllJobs();
+    public ResponseEntity<List<JobDTO>> getAllJobs() {
+        return ResponseEntity.ok(jobService.getAllJobs());
     }
 
     @GetMapping("/{id}")
@@ -31,8 +32,7 @@ public class JobController {
 
     @PostMapping
     public ResponseEntity<JobDTO> createJob(@RequestBody JobDTO jobDTO) {
-        JobDTO createdJob = jobService.createJob(jobDTO);
-        return ResponseEntity.ok(createdJob);
+        return ResponseEntity.ok(jobService.createJob(jobDTO));
     }
 
     @PutMapping("/{id}")
@@ -43,8 +43,11 @@ public class JobController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJob(@PathVariable Integer id) {
-        boolean deleted = jobService.deleteJob(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        return jobService.deleteJob(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<List<JobDTO>> getJobsByAssignedUser(@PathVariable Integer userId) {
+        return ResponseEntity.ok(jobService.getJobsByAssignedUserId(userId));
+    }
 }

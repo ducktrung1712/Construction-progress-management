@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 public class JobType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;  // Sửa 'Id' thành 'id' theo chuẩn Java
+    Integer id;
 
     @Column(nullable = false)
     String name;

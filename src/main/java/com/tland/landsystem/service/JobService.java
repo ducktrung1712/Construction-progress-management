@@ -16,61 +16,36 @@ import java.util.stream.Collectors;
 
 @Service
 public class JobService {
-    private final JobRepository jobRepository;
+    @Autowired
+    private JobRepository jobRepository;
     @Autowired
     private LandRepository landRepository;
-
     @Autowired
     private JobTypeRepository jobTypeRepository;
-
     @Autowired
     private UsersRepository userRepository;
 
-    @Autowired
-    public JobService(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
-    }
-
-    // Lấy tất cả công việc
     public List<JobDTO> getAllJobs() {
         return jobRepository.findAll().stream().map(JobDTO::new).collect(Collectors.toList());
     }
 
-    // Lấy công việc theo ID
     public JobDTO getJobById(Integer id) {
-        Optional<Job> job = jobRepository.findById(id);
-        return job.map(JobDTO::new).orElse(null);
+        return jobRepository.findById(id).map(JobDTO::new).orElse(null);
     }
 
-    // Chuyển từ DTO sang Entity
     private Job convertToEntity(JobDTO jobDTO) {
         Job job = new Job();
         job.setId(jobDTO.getId());
         job.setDescription(jobDTO.getDescription());
         job.setStatus(JobStatus.fromString(jobDTO.getStatus()));
-
-
-        if (jobDTO.getLandId() != null) {
-            job.setLand(landRepository.findById(jobDTO.getLandId()).orElse(null));
-        }
-
-        if (jobDTO.getJobTypeId() != null) {
-            job.setJobType(jobTypeRepository.findById(jobDTO.getJobTypeId()).orElse(null));
-        }
-
-        if (jobDTO.getAssignedTo() != null) {
-            job.setAssignedTo(userRepository.findById(jobDTO.getAssignedTo()).orElse(null));
-        }
-
+        job.setLand(jobDTO.getLandId() != null ? landRepository.findById(jobDTO.getLandId()).orElse(null) : null);
+        job.setJobType(jobDTO.getJobTypeId() != null ? jobTypeRepository.findById(jobDTO.getJobTypeId()).orElse(null) : null);
+        job.setAssignedTo(jobDTO.getAssignedTo() != null ? userRepository.findById(jobDTO.getAssignedTo()).orElse(null) : null);
         return job;
     }
 
-
-    // Tạo công việc mới
     public JobDTO createJob(JobDTO jobDTO) {
-        Job job = convertToEntity(jobDTO);
-        Job savedJob = jobRepository.save(job);
-        return new JobDTO(savedJob);
+        return new JobDTO(jobRepository.save(convertToEntity(jobDTO)));
     }
 
     public JobDTO updateJob(Integer id, JobDTO jobDTO) {
@@ -78,40 +53,24 @@ public class JobService {
         if (!jobOptional.isPresent()) {
             return null;
         }
-
         Job job = jobOptional.get();
-
-        // Gán đối tượng Land
-        if (jobDTO.getLandId() != null) {
-            job.setLand(landRepository.findById(jobDTO.getLandId()).orElse(null));
-        }
-
-        // Gán đối tượng JobType
-        if (jobDTO.getJobTypeId() != null) {
-            job.setJobType(jobTypeRepository.findById(jobDTO.getJobTypeId()).orElse(null));
-        }
-
-        // Gán đối tượng AssignedTo (User)
-        if (jobDTO.getAssignedTo() != null) {
-            job.setAssignedTo(userRepository.findById(jobDTO.getAssignedTo()).orElse(null));
-        }
-
-        // Cập nhật các thuộc tính khác
+        job.setLand(jobDTO.getLandId() != null ? landRepository.findById(jobDTO.getLandId()).orElse(null) : null);
+        job.setJobType(jobDTO.getJobTypeId() != null ? jobTypeRepository.findById(jobDTO.getJobTypeId()).orElse(null) : null);
+        job.setAssignedTo(jobDTO.getAssignedTo() != null ? userRepository.findById(jobDTO.getAssignedTo()).orElse(null) : null);
         job.setDescription(jobDTO.getDescription());
-
-        job.setStatus(JobStatus.fromString(jobDTO.getStatus())); // Chuyển String -> Enum
-
-        Job updatedJob = jobRepository.save(job);
-        return new JobDTO(updatedJob);
+        job.setStatus(JobStatus.fromString(jobDTO.getStatus()));
+        return new JobDTO(jobRepository.save(job));
     }
 
-
-    // Xóa công việc
     public boolean deleteJob(Integer id) {
         if (!jobRepository.existsById(id)) {
             return false;
         }
         jobRepository.deleteById(id);
         return true;
+    }
+
+    public List<JobDTO> getJobsByAssignedUserId(Integer userId) {
+        return jobRepository.findByAssignedToId(userId).stream().map(JobDTO::new).collect(Collectors.toList());
     }
 }
